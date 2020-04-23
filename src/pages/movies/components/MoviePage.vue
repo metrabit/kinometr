@@ -69,7 +69,6 @@ export default {
         `https://api.themoviedb.org/3/movie/${currentMovieId}?api_key=${key.code}&language=en-US`
       )
       .then(res => (this.movieData = res.data));
-    console.log(this.movieData);
   },
   methods: {
     getImage(poster_path) {

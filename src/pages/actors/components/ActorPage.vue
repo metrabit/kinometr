@@ -6,10 +6,15 @@
     <p>{{actorData.place_of_birth}}</p>
     <p v-if="actorData.birthday">{{actorData.birthday}} ({{ageActor}})</p>
     <hr />
-    <pre>
 
-    {{actorFilms}}
-    </pre>
+    <div v-for="film in actorFilms" :key="film.id">
+      <h3>{{ film.title }}</h3>
+      <div>{{ film.release_date }}</div>
+      <div>{{ film.vote_average }}</div>
+      <p>{{film.overview}}</p>
+      <div v-for="genre in getCurrentGenres(film.genre_ids)" :key="genre">{{ genre }}</div>
+      <img :src="getImage(film.poster_path)" alt />
+    </div>
   </div>
 </template>
 
@@ -22,7 +27,8 @@ export default {
   name: "ActorPage",
   data: () => ({
     actorData: {},
-    actorFilms: {}
+    actorFilms: {},
+    genres: []
   }),
   computed: {
     isActorDataExist() {
@@ -37,6 +43,7 @@ export default {
   },
   mounted() {
     this.getActorInfo();
+    this.getGenres();
   },
   methods: {
     async getActorInfo() {
@@ -62,11 +69,32 @@ export default {
         })
         .catch((this.actorFilms = "Data about actor's films is absent"));
     },
+    getGenres() {
+      axios
+        .get(
+          `https://api.themoviedb.org/3/genre/movie/list?api_key=${key.code}&language=en-US`
+        )
+        .then(res => {
+          this.genres = res.data.genres;
+        });
+    },
     getImage(poster_path) {
       return `http://image.tmdb.org/t/p/w185/${poster_path}`;
     },
-    getTopFilms(filmCount) {
-      console.log(filmCount);
+    getCurrentGenres(filmGenreIds) {
+      const movieGenresList = [];
+
+      if (filmGenreIds) {
+        filmGenreIds.forEach(id => {
+          this.genres.map(genre => {
+            if (id === genre.id) {
+              movieGenresList.push(genre.name);
+            }
+          });
+        });
+      }
+
+      return movieGenresList;
     }
   }
 };

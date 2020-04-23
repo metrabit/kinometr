@@ -1,16 +1,17 @@
 <template>
   <div class="shows">
-    <ShowCard
-      v-for="(show, index) in showList.results"
-      :key="index"
-      :show-info="show"
-      @click.native="toShowPage(show)"
-    ></ShowCard>
+    <div class="shows__list">
+      <ShowCard
+        v-for="(show, index) in showList.results"
+        :key="index"
+        :show-info="show"
+        @click.native="toShowPage(show)"
+      ></ShowCard>
+    </div>
     <Pagination
-      :currentPage="showList.page"
-      :lastPage="showList.totalPages"
-      :newData="showList"
-      :url="getDataFromAnotherPage('next')"
+      :currentPage="currentPage"
+      :lastPage="showList.total_pages"
+      @page-changed="getPopularShowList"
     />
   </div>
 </template>
@@ -30,20 +31,22 @@ export default {
   },
   data: () => ({
     showList: [],
-    page: 1
+    currentPage: 1
   }),
   created() {
-    this.getPopularShowList();
+    this.getPopularShowList(this.currentPage);
   },
   methods: {
-    getPopularShowList() {
+    getPopularShowList(page) {
       axios
         .get(
-          `https://api.themoviedb.org/3/tv/popular?api_key=${key.code}&language=en-US&page=1`
+          `https://api.themoviedb.org/3/tv/popular?api_key=${key.code}&language=en-US&page=${page}`
         )
         .then(res => {
           this.showList = res.data;
         });
+
+      this.currentPage = page;
     },
     toShowPage(data) {
       this.$router.push({
@@ -52,15 +55,6 @@ export default {
           id: data.id
         }
       });
-    },
-    getDataFromAnotherPage(way) {
-      if (way === "next") {
-        this.page += 1;
-      } else if (way === "prev" && this.page !== 1) {
-        this.page -= 1;
-      }
-
-      return `https://api.themoviedb.org/3/tv/popular?api_key=${key.code}&language=en-US&page=${this.page}`;
     }
   }
 };
@@ -69,8 +63,14 @@ export default {
 <style lang="scss">
 .shows {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
+  align-items: center;
+  flex-direction: column;
   padding: 64px;
+
+  &__list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
 }
 </style>

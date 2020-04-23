@@ -1,46 +1,55 @@
 <template>
   <div class="movies-list" id="app">
-    <MovieCard
-      v-for="(film, index) in filmsList"
-      :key="index"
-      :film="film"
-      :genres="genres"
-      @click.native="toMoviePage(film)"
-    ></MovieCard>
-    <button @click="toNextPage">next</button>
-    {{page}}
+    <div class="movies-list__cards">
+      <MovieCard
+        v-for="(film, index) in filmsList.results"
+        :key="index"
+        :film="film"
+        :genres="genres"
+        @click.native="toMoviePage(film)"
+      ></MovieCard>
+    </div>
+    <Pagination
+      :currentPage="currentPage"
+      :lastPage="filmsList.total_pages"
+      @page-changed="getPopularFimlsList"
+    />
   </div>
 </template>
 
 <script>
 import axios from "axios";
 import MovieCard from "./components/MovieCard";
+import Pagination from "../../global/components/Pagination";
 
 import key from "../../global/key";
 
 export default {
   name: "MoviesList",
   components: {
-    MovieCard
+    MovieCard,
+    Pagination
   },
   data: () => ({
     filmsList: [],
     genres: [],
-    page: 1
+    currentPage: 1
   }),
   created() {
-    this.getPopularFimlsList();
+    this.getPopularFimlsList(1);
     this.getGenres();
   },
   methods: {
-    getPopularFimlsList() {
+    getPopularFimlsList(page) {
       axios
         .get(
-          `https://api.themoviedb.org/3/movie/popular?api_key=${key.code}&language=en-US&page=${this.page}`
+          `https://api.themoviedb.org/3/movie/popular?api_key=${key.code}&language=en-US&page=${page}`
         )
         .then(res => {
-          this.filmsList = res.data.results;
+          this.filmsList = res.data;
         });
+
+      this.currentPage = page;
     },
     getGenres() {
       axios
@@ -70,8 +79,14 @@ export default {
 <style lang="scss">
 .movies-list {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
+  align-items: center;
+  flex-direction: column;
   padding: 64px;
+
+  &__cards {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
 }
 </style>

@@ -1,50 +1,62 @@
 <template>
-  <div>
-    <strong>1</strong>
-    <ArrowSide isLeftWay @click.native="changePage('prev', url, newData)"></ArrowSide>
-    <strong>{{ currentPage }}</strong>
-    <ArrowSide @click.native="changePage('next', url, newData)"></ArrowSide>
-    <strong>{{ lastPage }}</strong>
+  <div class="pagination d-flex">
+    <div @click="changePage(1)" class="pagination__btn">1</div>
+    <ArrowSide isLeftWay @click.native="changePage(prevPage)"></ArrowSide>
+    {{ currentPage }}
+    <ArrowSide @click.native="changePage(nextPage)"></ArrowSide>
+    <div @click="changePage(lastPage)" class="pagination__btn">{{ lastPage }}</div>
   </div>
 </template>
 
 <script>
 import ArrowSide from "../icons/ArrowSide";
 
-import axios from "axios";
+// import axios from "axios";
 export default {
   name: "Pagination",
   components: {
     ArrowSide
   },
-  props: {
-    currentPage: Number,
-    lastPage: Number,
-    url: {
-      type: String,
-      required: true
+  computed: {
+    nextPage() {
+      return this.currentPage === this.lastPage
+        ? this.currentPage
+        : this.currentPage + 1;
     },
-    newData: {
-      type: Object,
-      required: true
+    prevPage() {
+      return this.currentPage !== 1 ? this.currentPage - 1 : this.currentPage;
     }
   },
-  methods: {
-    changePage(way, url, newData) {
-      if (way === "prev") {
-        this.getData(url, newData);
-      } else {
-        this.getData(url, newData);
-      }
-      console.log(url);
+  props: {
+    currentPage: {
+      type: Number,
+      default: 1
     },
-    // eslint-disable-next-line no-unused-vars
-    getData(url, newData) {
-      axios
-        .get(url)
-        .then(res => (newData = res))
-        .catch(() => (newData = "data is not exist"));
+    lastPage: Number
+  },
+  methods: {
+    changePage(page) {
+      this.$emit("page-changed", page);
     }
   }
 };
 </script>
+
+<style lang="scss">
+.pagination {
+  align-items: center;
+  width: 20%;
+  justify-content: space-between;
+
+  &__btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #333;
+    border-radius: 3px;
+    padding: 6px 0;
+    width: 48px;
+    cursor: pointer;
+  }
+}
+</style>
