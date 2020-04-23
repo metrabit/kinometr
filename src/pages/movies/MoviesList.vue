@@ -43,7 +43,8 @@ export default {
     getPopularFimlsList(page) {
       axios
         .get(
-          `https://api.themoviedb.org/3/movie/popular?api_key=${key.code}&language=en-US&page=${page}`
+          // `https://api.themoviedb.org/3/movie/popular?api_key=${key.code}&language=en-US&page=${page}`
+          `https://api.themoviedb.org/3/movie/top_rated?api_key=${key.code}&language=en-US&page=${page}`
         )
         .then(res => {
           this.filmsList = res.data;

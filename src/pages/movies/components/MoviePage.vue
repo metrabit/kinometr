@@ -47,6 +47,7 @@
           <strong>subtitle:</strong>
           {{movieData.tagline}}
         </div>
+        <iframe width="420" height="315" :src="getVideoURL(movieData.id)"></iframe>
       </div>
     </div>
   </div>
@@ -59,20 +60,49 @@ import key from "../../../global/key";
 export default {
   name: "MoviePage",
   data: () => ({
-    movieData: {}
+    movieData: {},
+    videoURL: ""
   }),
+  computed: {
+    currentMovieId() {
+      return this.$route.params.id;
+    }
+  },
   created() {
-    const currentMovieId = this.$route.params.id;
-
-    axios
-      .get(
-        `https://api.themoviedb.org/3/movie/${currentMovieId}?api_key=${key.code}&language=en-US`
-      )
-      .then(res => (this.movieData = res.data));
+    this.getData(this.currentMovieId);
+  },
+  mounted() {
+    if (!this.movieData.length) {
+      this.getData(this.currentMovieId);
+      console.log(this.currentMovieId);
+    }
   },
   methods: {
+    getData(id) {
+      axios
+        .get(
+          `https://api.themoviedb.org/3/movie/${id}?api_key=${key.code}&language=en-US`
+        )
+        .then(res => (this.movieData = res.data));
+    },
     getImage(poster_path) {
       return `http://image.tmdb.org/t/p/w185/${poster_path}`;
+    },
+    getVideoURL(id) {
+      axios
+        .get(
+          `http://api.themoviedb.org/3/movie/${id}/videos?api_key=${key.code}&language=en-US`
+        )
+        .then(info => {
+          const [firstResult] = info.data.results;
+
+          this.videoURL = `https://www.youtube.com/embed/${firstResult.key}`;
+        })
+        .catch(
+          () => (this.videoURL = "https://www.youtube.com/embed/xqQ_ZAuPH8g")
+        );
+
+      return this.videoURL;
     }
   }
 };

@@ -1,9 +1,15 @@
 <template>
-  <div>Hello world</div>
+  <div>
+    <HomeSlider></HomeSlider>
+  </div>
 </template>
 
 <script>
+import HomeSlider from "./HomeSlider";
 export default {
-  name: "Home"
+  name: "Home",
+  components: {
+    HomeSlider
+  }
 };
 </script>

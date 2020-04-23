@@ -7,13 +7,15 @@
     <p v-if="actorData.birthday">{{actorData.birthday}} ({{ageActor}})</p>
     <hr />
 
-    <div v-for="film in actorFilms" :key="film.id">
-      <h3>{{ film.title }}</h3>
-      <div>{{ film.release_date }}</div>
-      <div>{{ film.vote_average }}</div>
-      <p>{{film.overview}}</p>
-      <div v-for="genre in getCurrentGenres(film.genre_ids)" :key="genre">{{ genre }}</div>
-      <img :src="getImage(film.poster_path)" alt />
+    <div class="actor-page__popularity-movies">
+      <div v-for="film in onlyTopFilms" :key="film.id" class="actor-page__movie-card">
+        <h3>{{ film.title }}</h3>
+        <div>{{ film.release_date }}</div>
+        <div>{{ film.vote_average }}</div>
+        <!-- <p>{{film.overview}}</p> -->
+        <div v-for="genre in getCurrentGenres(film.genre_ids)" :key="genre">{{ genre }}</div>
+        <img :src="getImage(film.poster_path)" alt />
+      </div>
     </div>
   </div>
 </template>
@@ -27,7 +29,7 @@ export default {
   name: "ActorPage",
   data: () => ({
     actorData: {},
-    actorFilms: {},
+    actorFilms: [],
     genres: []
   }),
   computed: {
@@ -39,6 +41,12 @@ export default {
     },
     ageActor() {
       return moment(this.actorData.birthday, "YYYY-MM-DD").fromNow("y");
+    },
+    onlyTopFilms() {
+      const topFilms = this.actorFilms;
+      const AMOUNT_OF_FILMS = 4;
+
+      return topFilms.slice(0, AMOUNT_OF_FILMS);
     }
   },
   mounted() {
@@ -62,7 +70,7 @@ export default {
         )
         .then(res => {
           const sortedFilms = res.data.cast.sort(
-            (current, next) => next.vote_average - current.vote_average
+            (current, next) => next.popularity - current.popularity
           );
 
           this.actorFilms = sortedFilms;
@@ -99,3 +107,16 @@ export default {
   }
 };
 </script>  
+
+<style lang="scss">
+.actor-page {
+  &__popularity-movies {
+    display: flex;
+    justify-content: center;
+  }
+
+  &__movie-card {
+    width: 20%;
+  }
+}
+</style>
