@@ -1,6 +1,6 @@
 <template>
   <div class="movies-list" id="app">
-    <div class="movies-list__cards">
+    <div class="container movies-list__cards">
       <MovieCard
         v-for="(film, index) in filmsList.results"
         :key="index"

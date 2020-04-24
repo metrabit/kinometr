@@ -1,12 +1,39 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700&display=swap');
+
+$black: #222;
+$yellow: #fff538;
+$text-color: #333;
+
+$font-family: 'Manrope',
+sans-serif;
+
 * {
-  font-family: Helvetica, Arial, sans-serif;
+  font-family: $font-family;
 }
 
 body {
   margin: 0;
+  background-color: #feffff;
+}
+
+a {
+  color: unset;
+  text-decoration: none;
+}
+
+ul {
+  list-style: none;
 }
 
 .d-flex {
   display: flex;
-  margin-bottom: 100px;
+}
+
+.d-none {
+  display: none;
+}
+
+.container {
+  width: 1200px;
+  margin: 0 auto;
 }

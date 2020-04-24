@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="d-flex">
+    <div class="d-flex container">
       <div class="test2">
         <h2>
           <strong>title:</strong>
@@ -16,6 +16,10 @@
         <div>
           <strong>budget:</strong>
           {{movieData.budget}} $
+        </div>
+        <div>
+          <strong>revenue:</strong>
+          {{movieData.revenue}} $
         </div>
         <strong>genres:</strong>
         <div v-for="genre in movieData.genres" :key="genre.id">{{genre.name }}</div>

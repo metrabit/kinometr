@@ -45,9 +45,14 @@ export default {
 
 <style lang="scss">
 .movie-card {
-  width: 20%;
+  width: 16%;
   margin: 16px;
   position: relative;
+  cursor: pointer;
+
+  &__poster {
+    width: 100%;
+  }
 
   &__title {
     position: absolute;
