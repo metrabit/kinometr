@@ -59,7 +59,7 @@
 
 <script>
 import axios from "axios";
-import key from "../../../global/key";
+import key from "@global/key";
 
 export default {
   name: "MoviePage",

@@ -25,8 +25,8 @@
 </template>
 
 <script>
-import Logo from "../icons/Logo";
-import SearchIcon from "../icons/SearchIcon";
+import Logo from "@icons/Logo";
+import SearchIcon from "@icons/SearchIcon";
 
 export default {
   name: "Header",
@@ -38,10 +38,11 @@ export default {
 </script>
 
 <style lang="scss">
-@import "../styles/global";
+@import "@global/styles/global";
 
 .header {
   position: fixed;
+  top: 0;
   align-items: center;
   width: 100%;
   box-sizing: border-box;

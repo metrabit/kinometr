@@ -19,9 +19,9 @@
 <script>
 import axios from "axios";
 import ActorCard from "./components/ActorCard";
-import Pagination from "../../global/components/Pagination";
+import Pagination from "@global/components/Pagination";
 
-import key from "../../global/key";
+import key from "@global/key";
 
 export default {
   name: "ActorsList",

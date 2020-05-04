@@ -23,7 +23,7 @@
 <script>
 import axios from "axios";
 import moment from "moment";
-import key from "../../../global/key";
+import key from "@global/key";
 
 export default {
   name: "ActorPage",

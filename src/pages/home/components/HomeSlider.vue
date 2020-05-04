@@ -38,8 +38,8 @@
 
 <script>
 import axios from "axios";
-import key from "../../../global/key";
-import ArrowSide from "../../../global/icons/ArrowSide";
+import key from "@global/key";
+import ArrowSide from "@global/icons/ArrowSide";
 
 export default {
   name: "HomeSlider",
@@ -51,15 +51,15 @@ export default {
     movies: [],
     images: [
       {
-        path: require("../../../assets/knocking.jpg"),
+        path: require("@assets/knocking.jpg"),
         id: 158
       },
       {
-        path: require("../../../assets/leon.jpg"),
+        path: require("@assets/leon.jpg"),
         id: 101
       },
       {
-        path: require("../../../assets/untoucheble.jpg"),
+        path: require("@assets/untoucheble.jpg"),
         id: 77338
       }
     ],
@@ -116,13 +116,13 @@ export default {
 </script>
 
 <style lang="scss">
-@import "../../../global/styles/global";
+@import "@global/styles/global";
 
 .home-slider {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding-top: 100px;
+  padding-top: 30px;
   min-height: 100px;
 
   &__item {

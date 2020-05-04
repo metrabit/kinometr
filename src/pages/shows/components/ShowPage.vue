@@ -35,7 +35,7 @@
 </template>
 
 <script>
-import key from "../../../global/key";
+import key from "@global/key";
 import axios from "axios";
 
 export default {

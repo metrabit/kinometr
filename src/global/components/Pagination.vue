@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import ArrowSide from "../icons/ArrowSide";
+import ArrowSide from "@icons/ArrowSide";
 
 // import axios from "axios";
 export default {
