@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import HomeSlider from "./HomeSlider";
+import HomeSlider from "./components/HomeSlider";
 export default {
   name: "Home",
   components: {

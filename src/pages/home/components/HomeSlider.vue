@@ -27,7 +27,7 @@
         <div class="home-slider__item-content">
           <h2 class="home-slider__title">{{ movie.original_title }}</h2>
           <p class="home-slider__description">{{movie.overview}}</p>
-          <div class="home-slider__btn">check it</div>
+          <div class="home-slider__btn" @click="toMoviePage(movie)">check it</div>
         </div>
       </div>
       <hr />
@@ -38,8 +38,8 @@
 
 <script>
 import axios from "axios";
-import key from "../../global/key";
-import ArrowSide from "../../global/icons/ArrowSide";
+import key from "../../../global/key";
+import ArrowSide from "../../../global/icons/ArrowSide";
 
 export default {
   name: "HomeSlider",
@@ -51,15 +51,15 @@ export default {
     movies: [],
     images: [
       {
-        path: require("../../assets/knocking.jpg"),
+        path: require("../../../assets/knocking.jpg"),
         id: 158
       },
       {
-        path: require("../../assets/leon.jpg"),
+        path: require("../../../assets/leon.jpg"),
         id: 101
       },
       {
-        path: require("../../assets/untoucheble.jpg"),
+        path: require("../../../assets/untoucheble.jpg"),
         id: 77338
       }
     ],
@@ -102,13 +102,21 @@ export default {
     changeSlide(slide) {
       this.currentSlide = slide;
       return slide;
+    },
+    toMoviePage(movie) {
+      this.$router.push({
+        name: "MoviePage",
+        params: {
+          id: movie.id
+        }
+      });
     }
   }
 };
 </script>
 
 <style lang="scss">
-@import "../../global/styles/global";
+@import "../../../global/styles/global";
 
 .home-slider {
   display: flex;
@@ -165,11 +173,11 @@ export default {
     background-color: unset;
     margin-left: 14px;
     border-radius: 100%;
-    border: 2px solid #ccc;
+    border: 2px solid $yellow;
     cursor: pointer;
 
     &--active {
-      background-color: #ccc;
+      background-color: $yellow;
     }
   }
 }
