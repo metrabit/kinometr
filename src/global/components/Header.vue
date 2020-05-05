@@ -63,11 +63,10 @@ export default {
     text-transform: uppercase;
     font-weight: 600;
     font-size: 15px;
-    transition: 0.2s;
+    transition: 0.1s;
 
     &:hover {
-      border-bottom: 2px solid $yellow;
-      border-radius: 2px;
+      transform: rotate(5deg);
     }
   }
 

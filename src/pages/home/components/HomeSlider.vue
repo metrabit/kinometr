@@ -122,8 +122,10 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding-top: 30px;
-  min-height: 100px;
+  padding-top: 80px;
+  margin-bottom: 40px;
+  min-height: 480px;
+  min-width: 100%;
 
   &__item {
     position: relative;
