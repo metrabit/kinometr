@@ -132,6 +132,8 @@ export default {
     display: flex;
     flex-direction: column;
     align-items: center;
+    min-width: 1012px;
+    min-height: 480px;
     width: fit-content;
     margin: 0 16px;
   }
@@ -170,12 +172,12 @@ export default {
   }
 
   &__dot {
-    width: 14px;
-    height: 14px;
+    width: 10px;
+    height: 10px;
     background-color: unset;
     margin-left: 14px;
     border-radius: 100%;
-    border: 2px solid $yellow;
+    border: 1.5px solid $yellow;
     cursor: pointer;
 
     &--active {

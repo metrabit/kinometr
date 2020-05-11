@@ -1,7 +1,9 @@
 <template>
-  <div>
+  <div class="app">
     <Header></Header>
-    <router-view></router-view>
+    <div class="app__content">
+      <router-view></router-view>
+    </div>
     <Footer></Footer>
   </div>
 </template>
@@ -18,6 +20,16 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss">
 @import "./global/styles/global.scss";
+
+.app {
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100vh - 80px);
+
+  &__content {
+    flex: 1;
+  }
+}
 </style>
